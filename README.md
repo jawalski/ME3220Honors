@@ -1,7 +1,7 @@
 # ME3220Honors
-1D element analysis for axial deflection of a beam
 
-'''matlabfunction M = mass(n,rho,A,L)
+'''matlab
+function M = mass(n,rho,A,L)
 M = zeros(size(n+1));
 C = rho*A*L/n/420;
 matrix_m = 2/3*diag(ones(n+1,1))+1/6*diag(ones(n,1),1)+1/6*diag(ones(n,1),-1);
