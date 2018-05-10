@@ -73,4 +73,4 @@ legend('n=4','n=20','n=50');
 saveas(f,'HonorsProject.png');
 ```
 
-![Example for division into 4, 20, and 50 sections](./Images/Honors_Conversion_graph.png)
+![Example for division into 4, 20, and 50 sections](./Images/HonorsProject.png)
