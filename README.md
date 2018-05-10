@@ -9,7 +9,8 @@ matrix_m(1,1) = 1/3;
 matrix_m(n+1,n+1) = 1/3;
 M = C.*matrix_m;
 M = M(2:n+1,2:n+1);
-end ```
+end
+```
 
 ```matlab
 function K = stiffness(n,A,E,L)
@@ -23,14 +24,16 @@ matrix_k(1,1) = 1;
 matrix_k(n+1,n+1) = 1;
 K = C.*matrix_k;
 K = K(2:n+1,2:n+1);
-end```
+end
+```
 
 ```matlab
 function [w,u]=KM_solve(K,M)
 [u,w] = eig(K,M);
 w = sqrt(w);
 w = diag(w);
-end```
+end
+```
 
 ```matlab
 A = 0.2;
@@ -67,6 +70,7 @@ title('Continuous Rod Deflection Over Time');
 xlabel('Time (ms)')
 ylabel('Position (mm)')
 legend('n=4','n=20','n=50'); 
-saveas(f,'HonorsProject.png');```
+saveas(f,'HonorsProject.png');
+```
 
 ![Example for division into 4, 20, and 50 sections](./Images/Honors_Conversion_graph.png)
