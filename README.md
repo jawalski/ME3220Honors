@@ -1,7 +1,7 @@
 # ME3220Honors
 1D element analysis for axial deflection of a beam
 
-'''matlab
+{'''matlab}
 function M = mass(n,rho,A,L)
 M = zeros(size(n+1));
 C = rho*A*L/n/420;
@@ -11,9 +11,9 @@ matrix_m(n+1,n+1) = 1/3;
 M = C.*matrix_m;
 M = M(2:n+1,2:n+1);
 end
-'''
+{'''}
 
-'''matlab
+{'''matlab
 function K = stiffness(n,A,E,L)
 K = zeros(size(n+1));
 r_2 = A/pi();
