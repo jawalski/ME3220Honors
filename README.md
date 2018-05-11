@@ -1,6 +1,8 @@
 # ME3220Honors
 This code is intended to serve as a 1D finite element analysis for a beam that deflects in the transverse direction. The code takes an input the number of segments the beam is divided into (n), the density (rho), the cross-sectional area (A), Young's Modulus (E), and the length of the beam (L) and returns the response of the beam in the transverse direction over time for a specified time range.
 
+
+This first function sets up the mass matrix for the beam using an ODE.
 ```matlab
 function M = mass(n,rho,A,L)
 M = zeros(size(n+1));
@@ -13,6 +15,8 @@ M = M(2:n+1,2:n+1);
 end
 ```
 
+
+The second function sets up a matrix for the stiffness of the beam
 ```matlab
 function K = stiffness(n,A,E,L)
 K = zeros(size(n+1));
@@ -28,6 +32,8 @@ K = K(2:n+1,2:n+1);
 end
 ```
 
+
+The third function sets up an ODE that will solve for the natural frequencies and eigenvectors of the beam.
 ```matlab
 function [w,u]=KM_solve(K,M)
 [u,w] = eig(K,M);
@@ -36,6 +42,8 @@ w = diag(w);
 end
 ```
 
+
+This final code takes all the previously defined ODE solvers and gives them inputs for a standard beam. Responses for a beam divided into 4, 20, and 50 segments are plotted on a graph for comparison.
 ```matlab
 A = 0.2;
 E = 200*10^9;
