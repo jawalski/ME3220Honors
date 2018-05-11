@@ -63,13 +63,13 @@ for n = [4, 20, 50]
         solution = solution + u(:,i)*coeff(i)*sin(w(i)*t);
     end
     f = figure(1);
-    plot(t*1000,solution(n,:)*1000)
+    plot(t*1000,solution(n,:))
     hold on;
     
 end
 title('Continuous Rod Deflection Over Time');
 xlabel('Time (ms)')
-ylabel('Position (mm)')
+ylabel('Position (m)')
 legend('n=4','n=20','n=50'); 
 saveas(f,'HonorsProject.png');
 ```
