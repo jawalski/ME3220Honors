@@ -1,5 +1,5 @@
 # ME3220Honors
-This code is intended to serve as a 1D finite element analysis for a beam that deflects in the transverse direction. The primary 
+This code is intended to serve as a 1D finite element analysis for a beam that deflects in the transverse direction. The code takes an input the number of segments the beam is divided into (n), the density (rho), the cross-sectional area (A), Young's Modulus (E), and the length of the beam (L) and returns the response of the beam in the transverse direction over time for a specified time range.
 
 ```matlab
 function M = mass(n,rho,A,L)
