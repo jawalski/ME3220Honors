@@ -1,4 +1,5 @@
 # ME3220Honors
+This code is intended to serve as a 1D finite element analysis for a beam that deflects in the transverse direction. The primary 
 
 ```matlab
 function M = mass(n,rho,A,L)
