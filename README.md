@@ -5,13 +5,11 @@ This code is intended to serve as a 1D finite element analysis for a beam that d
 This first function sets up the mass matrix for the beam using an ODE.
 ```matlab
 function M = mass(n,rho,A,L)
-M = zeros(size(n+1));
-C = rho*A*L/n/420;
-matrix_m = 2/3*diag(ones(n+1,1))+1/6*diag(ones(n,1),1)+1/6*diag(ones(n,1),-1);
+C = rho*A*L/2;
+matrix_m = 2/3*diag(ones(n+1,1))-1/6*diag(ones(n,1),1)-1/6*diag(ones(n,1),-1);
 matrix_m(1,1) = 1/3; 
 matrix_m(n+1,n+1) = 1/3;
 M = C.*matrix_m;
-M = M(2:n+1,2:n+1);
 end
 ```
 
@@ -19,16 +17,11 @@ end
 The second function sets up a matrix for the stiffness of the beam
 ```matlab
 function K = stiffness(n,A,E,L)
-K = zeros(size(n+1));
-r_2 = A/pi();
-I = (pi()/4)*r_2^2;
-C = E*I/(L/n)^3;
-%C = n*A*E/L;
+C = 2*A*E/L
 matrix_k = 2*diag(ones(n+1,1))-1*diag(ones(n,1),1)-1*diag(ones(n,1),-1);
 matrix_k(1,1) = 1;
 matrix_k(n+1,n+1) = 1;
 K = C.*matrix_k;
-K = K(2:n+1,2:n+1);
 end
 ```
 
@@ -54,30 +47,31 @@ for n = [4, 20, 50]
     m = mass(n,rho,A,L);
     [w,u]=KM_solve(K,m);
     t_end = 2*pi/min(w);
-    t = 0:0.00001:0.008;
+    t = 0:0.0001:0.025;
+    
     init = zeros(2*n,1);
     init(2*n) = -0.1;
-    matrix_1 = zeros(n,2*n);
-    matrix_2 = zeros(n,2*n);
-    for i=2:n+1
-        matrix_1(:,2*(i-1)) = u(:,i-1);
-        matrix_2(:,2*i-3) = u(:,i-1);
-    end
+    matrix_1 = zeros(n+1,2*(n+1));
+    matrix_2 = zeros(n+1,2*(n+1));
+    matrix_1(:,2:2:end) = u(:,1:1:end);
+    matrix_2(:,1:2:end) = u(:,1:1:end);
+    
     matrix_3 = [matrix_1;matrix_2];
-    coeff = matrix_3\init;
-    solution = u(:,1)*coeff(1)*sin(w(1)*t);
+    C = matrix_3\init;
+    
+    x_t = u(:,1)*C(1)*sin(w(1)*t);
     
     for i = 2:numel(w)
-        solution = solution + u(:,i)*coeff(i)*sin(w(i)*t);
+        x_t = x_t + u(:,i)*C(i)*sin(w(i)*t);
     end
     f = figure(1);
-    plot(t*1000,solution(n,:))
-    hold on;
-    
+    plot(t*1000,x_t(n,:)*1000)
+    hold on;   
 end
+
 title('Continuous Rod Deflection Over Time');
 xlabel('Time (ms)')
-ylabel('Position (m)')
+ylabel('Position (mm)')
 legend('n=4','n=20','n=50'); 
 saveas(f,'HonorsProject.png');
 ```
